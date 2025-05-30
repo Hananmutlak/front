@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعدادات النظام</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --primary: #2A2F4F;
+      --secondary: #917FB3;
+      --light: #FDE2F3;
+      --dark: #1a1c2e;
+      --text: #333;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --border: #e0e0e0;
+      --radius: 16px;
+      --shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+    
+    .dark-mode {
+      --text: #f0f0f0;
+      --background: #121212;
+      --card-bg: #1e1e1e;
+      --border: #333;
+      --shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      transition: var(--transition);
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* الشريط العلوي */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .logo i {
+      font-size: 2rem;
+      color: var(--secondary);
+    }
+    
+    .logo h1 {
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+    
+    .user-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    /* محتوى الإعدادات */
+    .settings-container {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+    }
+    
+    .settings-sidebar {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      height: fit-content;
+    }
+    
+    .sidebar-title {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 10px;
+    }
+    
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+      gap: 10px;
+    }
+    
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      background: rgba(145, 127, 179, 0.1);
+      color: var(--primary);
+    }
+    
+    .settings-content {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+    
+    .settings-header {
+      margin-bottom: 30px;
+    }
+    
+    .settings-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    .settings-header p {
+      color: #6c757d;
+      max-width: 600px;
+    }
+    
+    .settings-group {
+      margin-bottom: 40px;
+    }
+    
+    .settings-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+    }
+    
+    /* إعدادات اللغة */
+    .language-options {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .language-option {
+      flex: 1;
+      min-width: 200px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    
+    .language-option:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    
+    .language-option.active {
+      border-color: var(--primary);
+      background: rgba(145, 127, 179, 0.1);
+    }
+    
+    .language-option i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    /* إعدادات الوضع الليلي */
+    .dark-mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    
+    .toggle-container {
+      position: relative;
+      width: 60px;
+      height: 30px;
+    }
+    
+    .toggle-container input {
+      display: none;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ccc;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .toggle-slider:before {
+      content: "";
+      position: absolute;
+      height: 24px;
+      width: 24px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    input:checked + .toggle-slider {
+      background: var(--primary);
+    }
+    
+    input:checked + .toggle-slider:before {
+      transform: translateX(30px);
+    }
+    
+    .toggle-labels {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* إعدادات إمكانية الوصول */
+    .accessibility-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .accessibility-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .accessibility-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(145, 127, 179, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+    }
+    
+    .slider-container {
+      width: 200px;
+    }
+    
+    .text-size-slider {
+      width: 100%;
+      height: 8px;
+      background: #ddd;
+      border-radius: 4px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .text-size-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    .text-size-preview {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--background);
+    }
+    
+    .text-size-preview h4 {
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    /* ميزة قراءة المنتجات */
+    .product-reader {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      border: 1px solid var(--border);
+    }
+    
+    .reader-controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .reader-btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(145, 127, 179, 0.1);
+      color: var(--text);
+    }
+    
+    .reader-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .reader-content {
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--background);
+      margin-top: 20px;
+    }
+    
+    .reader-content h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    /* التصميم المتجاوب */
+    @media (max-width: 900px) {
+      .settings-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .settings-sidebar {
+        display: flex;
+        overflow-x: auto;
+        padding: 15px;
+      }
+      
+      .sidebar-menu {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .sidebar-menu li {
+        margin-bottom: 0;
+      }
+      
+      .sidebar-menu a {
+        padding: 10px 15px;
+        white-space: nowrap;
+      }
+      
+      .sidebar-title {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .top-bar {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      
+      .user-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .language-options {
+        flex-direction: column;
+      }
+    }
+    
+    /* أحجام النصوص */
+    .text-sm {
+      font-size: 0.9rem;
+    }
+    
+    .text-md {
+      font-size: 1rem;
+    }
+    
+    .text-lg {
+      font-size: 1.1rem;
+    }
+    
+    .text-xl {
+      font-size: 1.3rem;
+    }
+    
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- الشريط العلوي -->
+    <div class="top-bar">
+      <div class="logo">
+        <i class="fas fa-cog"></i>
+        <h1>إعدادات النظام</h1>
+      </div>
+      <div class="user-actions">
+        <button class="btn btn-outline" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+        <button class="btn btn-primary" onclick="saveSettings()">
+          <i class="fas fa-save"></i> حفظ الإعدادات
+        </button>
+      </div>
+    </div>
+    
+    <!-- محتوى الإعدادات -->
+    <div class="settings-container">
+      <!-- القائمة الجانبية -->
+      <div class="settings-sidebar">
+        <h2 class="sidebar-title"><i class="fas fa-sliders-h"></i> الإعدادات</h2>
+        <ul class="sidebar-menu">
+          <li><a href="#" class="active"><i class="fas fa-globe"></i> اللغة</a></li>
+          <li><a href="#"><i class="fas fa-moon"></i> الوضع الليلي</a></li>
+          <li><a href="#"><i class="fas fa-universal-access"></i> إمكانية الوصول</a></li>
+          <li><a href="#"><i class="fas fa-book-reader"></i> قارئ المنتجات</a></li>
+          <li><a href="#"><i class="fas fa-bell"></i> الإشعارات</a></li>
+          <li><a href="#"><i class="fas fa-shield-alt"></i> الخصوصية</a></li>
+        </ul>
+      </div>
+      
+      <!-- المحتوى الرئيسي -->
+      <div class="settings-content">
+        <div class="settings-header">
+          <h2><i class="fas fa-globe"></i> إعدادات اللغة والواجهة</h2>
+          <p>قم بتخصيص إعدادات اللغة والمظهر للنظام ليتناسب مع تفضيلاتك الشخصية</p>
+        </div>
+        
+        <!-- إعدادات اللغة -->
+        <div class="settings-group">
+          <h3 class="settings-title"><i class="fas fa-language"></i> اللغة</h3>
+          <div class="language-options">
+            <div class="language-option active" onclick="selectLanguage('ar')">
+              <i class="fas fa-font"></i>
+              <h4>العربية</h4>
+              <p>اللغة العربية - الافتراضية</p>
+            </div>
+            <div class="language-option" onclick="selectLanguage('en')">
+              <i class="fas fa-font"></i>
+              <h4>English</h4>
+              <p>English Language</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- إعدادات الوضع الليلي -->
+        <div class="settings-group">
+          <h3 class="settings-title"><i class="fas fa-moon"></i> الوضع الليلي</h3>
+          <div class="dark-mode-toggle">
+            <div class="toggle-container">
+              <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+              <label for="darkModeToggle" class="toggle-slider"></label>
+            </div>
+            <div class="toggle-labels">
+              <strong>تفعيل الوضع الليلي</strong>
+              <p>مريح للعيون في الإضاءة المنخفضة</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- إعدادات إمكانية الوصول -->
+        <div class="settings-group">
+          <h3 class="settings-title"><i class="fas fa-universal-access"></i> إمكانية الوصول</h3>
+          <div class="accessibility-option">
+            <div class="accessibility-info">
+              <div class="accessibility-icon">
+                <i class="fas fa-text-height"></i>
+              </div>
+              <div>
+                <strong>تكبير حجم النص</strong>
+                <p>تكبير حجم الخط لسهولة القراءة</p>
+              </div>
+            </div>
+            <div class="slider-container">
+              <input type="range" min="1" max="5" value="3" class="text-size-slider" id="textSizeSlider" oninput="changeTextSize()">
+            </div>
+          </div>
+          
+          <div class="text-size-preview">
+            <h4>معاينة حجم النص:</h4>
+            <p id="textPreview">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة. لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.</p>
+          </div>
+        </div>
+        
+        <!-- ميزة قراءة المنتجات -->
+        <div class="settings-group">
+          <h3 class="settings-title"><i class="fas fa-book-reader"></i> قارئ المنتجات</h3>
+          <div class="product-reader">
+            <p>هذه الميزة تساعد المستخدمين الذين يعانون من صعوبات في القراءة عن طريق قراءة أوصاف المنتجات بصوت مسموع.</p>
+            
+            <div class="reader-controls">
+              <button class="reader-btn" onclick="readProduct()">
+                <i class="fas fa-play"></i> قراءة المنتج
+              </button>
+              <button class="reader-btn" onclick="pauseReading()">
+                <i class="fas fa-pause"></i> إيقاف مؤقت
+              </button>
+              <button class="reader-btn" onclick="stopReading()">
+                <i class="fas fa-stop"></i> إيقاف القراءة
+              </button>
+              <button class="reader-btn" onclick="changeVoice()">
+                <i class="fas fa-voice"></i> تغيير الصوت
+              </button>
+            </div>
+            
+            <div class="reader-content">
+              <h3>شوربة الفطر بالكريمة</h3>
+              <p>شوربة فطر طازجة مع كريمة طبيعية وتوابل مميزة، تقدم ساخنة مع خبز التوست المقرمش. تحتوي على 250 سعرة حرارية فقط وتعد خياراً مثالياً لبداية الوجبة.</p>
+              <p>المكونات: فطر طازج، كريمة طازجة، مرق دجاج، بصل، ثوم، زبدة، ملح، فلفل، توابل خاصة.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // التحقق من وجود التوكن
+    document.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+      }
+      
+      // تحميل الإعدادات المحفوظة
+      loadSettings();
+    });
+    
+    // دالة تسجيل الخروج
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = 'index.html';
+    }
+    
+    // دالة تحميل الإعدادات
+    function loadSettings() {
+      // تحميل الوضع الليلي
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeToggle').checked = true;
+      }
+      
+      // تحميل حجم النص
+      const savedSize = localStorage.getItem('textSize') || '3';
+      document.getElementById('textSizeSlider').value = savedSize;
+      changeTextSize();
+      
+      // تحميل اللغة
+      const savedLang = localStorage.getItem('language') || 'ar';
+      selectLanguage(savedLang);
+    }
+    
+    // دالة حفظ الإعدادات
+    function saveSettings() {
+      // حفظ الوضع الليلي
+      const darkModeEnabled = document.getElementById('darkModeToggle').checked;
+      localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
+      
+      // حفظ حجم النص
+      const textSize = document.getElementById('textSizeSlider').value;
+      localStorage.setItem('textSize', textSize);
+      
+      // حفظ اللغة
+      const lang = document.querySelector('.language-option.active').dataset.lang;
+      localStorage.setItem('language', lang);
+      
+      // إظهار رسالة نجاح
+      alert('تم حفظ الإعدادات بنجاح!');
+    }
+    
+    // تغيير الوضع الليلي
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+    
+    // تغيير حجم النص
+    function changeTextSize() {
+      const sizes = ['text-sm', 'text-md', 'text-lg', 'text-xl', 'text-2xl'];
+      const textPreview = document.getElementById('textPreview');
+      const size = document.getElementById('textSizeSlider').value;
+      
+      // إزالة جميع أحجام النص
+      sizes.forEach(sizeClass => textPreview.classList.remove(sizeClass));
+      
+      // إضافة حجم النص المحدد
+      textPreview.classList.add(sizes[size - 1]);
+    }
+    
+    // اختيار اللغة
+    function selectLanguage(lang) {
+      document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.remove('active');
+      });
+      
+      document.querySelector(`.language-option[onclick="selectLanguage('${lang}')"]`).classList.add('active');
+    }
+    
+    // وظائف قارئ المنتجات
+    let speech = null;
+    
+    function readProduct() {
+      // إيقاف أي قراءة سابقة
+      if (speech) {
+        speech.cancel();
+      }
+      
+      // إنشاء كائن قراءة النص
+      speech = new SpeechSynthesisUtterance();
+      speech.text = "شوربة الفطر بالكريمة: شوربة فطر طازجة مع كريمة طبيعية وتوابل مميزة، تقدم ساخنة مع خبز التوست المقرمش. تحتوي على 250 سعرة حرارية فقط وتعد خياراً مثالياً لبداية الوجبة. المكونات: فطر طازج، كريمة طازجة، مرق دجاج، بصل، ثوم، زبدة، ملح، فلفل، توابل خاصة.";
+      speech.lang = 'ar-SA'; // اللغة العربية
+      speech.rate = 1.0; // سرعة القراءة
+      speech.pitch = 1.0; // نبرة الصوت
+      speech.volume = 1; // مستوى الصوت
+      
+      // بدء القراءة
+      window.speechSynthesis.speak(speech);
+    }
+    
+    function pauseReading() {
+      if (speech) {
+        window.speechSynthesis.pause();
+      }
+    }
+    
+    function stopReading() {
+      if (speech) {
+        window.speechSynthesis.cancel();
+      }
+    }
+    
+    function changeVoice() {
+      // هذه الميزة تعتمد على المتصفح والأصوات المتاحة
+      alert('تغيير الصوت يعتمد على المتصفح والأصوات المتاحة. يمكنك تغيير الإعدادات في نظام التشغيل.');
+    }
+  </script>
+</body>
+</html>

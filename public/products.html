@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المنتجات</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <style>
+    :root {
+      --primary: #2A2F4F;
+      --secondary: #917FB3;
+      --light: #FDE2F3;
+      --dark: #1a1c2e;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 80px 20px 20px;
+    }
+
+    .main-nav {
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      justify-content: flex-end;
+    }
+
+    .main-nav a {
+      color: var(--primary);
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+    }
+
+    .main-nav a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-nav a:hover {
+      background: rgba(var(--primary), 0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .product-card {
+      border: 1px solid #eee;
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+      background: white;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .product-header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem;
+    }
+
+    .product-body {
+      padding: 1.5rem;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 10px 0;
+    }
+
+    .product-status {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .product-available {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: #27ae60;
+    }
+
+    .product-unavailable {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: #c0392b;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .btn-edit {
+      background-color: var(--primary);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-delete {
+      background-color: #e74c3c;
+      color: white;
+      flex: 1;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .form-container {
+      margin-top: 2rem;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: var(--dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(145, 127, 179, 0.2);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-submit {
+      background-color: var(--secondary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+    }
+
+    .btn-cancel {
+      background-color: #95a5a6;
+      color: white;
+      padding: 0.8rem 1.5rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert-success {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: #27ae60;
+      border: 1px solid #27ae60;
+    }
+
+    .alert-error {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: #c0392b;
+      border: 1px solid #c0392b;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      display: none;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(42, 47, 79, 0.2);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="products.html" class="active">المنتجات</a></li>
+      <li><a href="bookings.html">الحجوزات</a></li>
+      <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>إدارة المنتجات</h1>
+    
+    <div class="alert" id="alertMessage"></div>
+    
+    <div class="loading" id="loadingIndicator">
+      <div class="loading-spinner"></div>
+      <p>جاري تحميل المنتجات...</p>
+    </div>
+    
+    <div class="product-grid" id="productsContainer"></div>
+    
+    <div class="form-container">
+      <h2 id="formTitle">إضافة منتج جديد</h2>
+      <form id="productForm">
+        <input type="hidden" id="productId">
+        
+        <div class="form-group">
+          <label for="productName">اسم المنتج</label>
+          <input type="text" id="productName" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="productDescription">الوصف</label>
+          <textarea id="productDescription" class="form-control" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="productPrice">السعر ($)</label>
+          <input type="number" id="productPrice" class="form-control" min="0" step="0.01" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="productAvailable">
+            <input type="checkbox" id="productAvailable"> متوفر
+          </label>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn btn-submit" id="submitBtn">حفظ المنتج</button>
+          <button type="button" class="btn btn-cancel" id="resetBtn">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // التحقق من وجود توكن صالح
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+      } else {
+        fetchProducts();
+      }
+    });
+    
+    // عناصر DOM
+    const container = document.getElementById('productsContainer');
+    const form = document.getElementById('productForm');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const alertMessage = document.getElementById('alertMessage');
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // API الأساسي
+    const API_BASE = 'https://restaurant-backend-aelo.onrender.com/api';
+    
+    // دالة لعرض الرسائل
+    function showAlert(message, type = 'success') {
+      alertMessage.textContent = message;
+      alertMessage.className = `alert alert-${type}`;
+      alertMessage.style.display = 'block';
+      
+      setTimeout(() => {
+        alertMessage.style.display = 'none';
+      }, 5000);
+    }
+    
+    // دالة لتحميل المنتجات
+    async function fetchProducts() {
+      try {
+        loadingIndicator.style.display = 'block';
+        container.innerHTML = '';
+        
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_BASE}/products`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('فشل في تحميل المنتجات');
+        }
+        
+        const products = await response.json();
+        renderProducts(products);
+      } catch (error) {
+        showAlert(`خطأ: ${error.message}`, 'error');
+        console.error('Error fetching products:', error);
+      } finally {
+        loadingIndicator.style.display = 'none';
+      }
+    }
+    
+    // دالة لعرض المنتجات
+    function renderProducts(products) {
+      container.innerHTML = '';
+      
+      if (products.length === 0) {
+        container.innerHTML = '<p>لا توجد منتجات متاحة</p>';
+        return;
+      }
+      
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+          <div class="product-header">
+            <h3>${product.name}</h3>
+          </div>
+          <div class="product-body">
+            <p>${product.description || 'لا يوجد وصف'}</p>
+            <div class="product-price">${product.price} $</div>
+            <div class="product-status ${product.isAvailable ? 'product-available' : 'product-unavailable'}">
+              ${product.isAvailable ? 'متوفر' : 'غير متوفر'}
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-edit" onclick="editProduct('${product._id}')">تعديل</button>
+              <button class="btn btn-delete" onclick="deleteProduct('${product._id}')">حذف</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(productCard);
+      });
+    }
+    
+    // دالة لتعديل المنتج
+    async function editProduct(id) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_BASE}/products/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('فشل في جلب بيانات المنتج');
+        }
+        
+        const product = await response.json();
+        
+        // تعبئة النموذج
+        document.getElementById('productId').value = product._id;
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productDescription').value = product.description || '';
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productAvailable').checked = product.isAvailable;
+        
+        formTitle.textContent = 'تعديل المنتج';
+        submitBtn.textContent = 'تحديث المنتج';
+        
+        // التمرير إلى النموذج
+        document.querySelector('.form-container').scrollIntoView({
+          behavior: 'smooth'
+        });
+      } catch (error) {
+        showAlert(`خطأ: ${error.message}`, 'error');
+      }
+    }
+    
+    // دالة لحذف المنتج
+    async function deleteProduct(id) {
+      if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+      
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_BASE}/products/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('فشل في حذف المنتج');
+        }
+        
+        showAlert('تم حذف المنتج بنجاح', 'success');
+        fetchProducts();
+      } catch (error) {
+        showAlert(`خطأ: ${error.message}`, 'error');
+      }
+    }
+    
+    // إرسال النموذج
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const id = document.getElementById('productId').value;
+      const name = document.getElementById('productName').value;
+      const description = document.getElementById('productDescription').value;
+      const price = document.getElementById('productPrice').value;
+      const isAvailable = document.getElementById('productAvailable').checked;
+      
+      const productData = {
+        name,
+        description,
+        price: parseFloat(price),
+        isAvailable
+      };
+      
+      const token = localStorage.getItem('token');
+      const method = id ? 'PUT' : 'POST';
+      const url = id ? `${API_BASE}/products/${id}` : `${API_BASE}/products`;
+      
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'جاري الحفظ...';
+        
+        const response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(productData)
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'فشل في حفظ المنتج');
+        }
+        
+        const result = await response.json();
+        
+        showAlert(
+          id ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح', 
+          'success'
+        );
+        
+        // إعادة تعيين النموذج
+        form.reset();
+        document.getElementById('productId').value = '';
+        formTitle.textContent = 'إضافة منتج جديد';
+        submitBtn.textContent = id ? 'تحديث المنتج' : 'حفظ المنتج';
+        
+        // إعادة تحميل المنتجات
+        fetchProducts();
+      } catch (error) {
+        showAlert(`خطأ: ${error.message}`, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = id ? 'تحديث المنتج' : 'حفظ المنتج';
+      }
+    });
+    
+    // إلغاء التعديل
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      form.reset();
+      document.getElementById('productId').value = '';
+      formTitle.textContent = 'إضافة منتج جديد';
+      submitBtn.textContent = 'حفظ المنتج';
+    });
+    
+    // تسجيل الخروج
+    window.logout = function() {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    };
+  </script>
+</body>
+</html>

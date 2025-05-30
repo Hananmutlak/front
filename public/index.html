@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الحجوزات</title>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body> <script>
+  // فقط تحقق إذا في توكن، وإذا موجود روح لصفحة dashboard.html مباشرة
+  if (localStorage.getItem('token')) {
+    window.location.href = 'dashboard.html'; // أو اسم صفحة لوحة التحكم
+  }
+</script>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="products.html">المنتجات</a></li>
+      <li><a href="bookings.html" class="active">الحجوزات</a></li>
+      <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
+    </ul>
+  </nav>
+  
+
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <button type="submit">دخول</button>
+    </form>
+    <p id="loginError" class="error"></p>
+  </div>
+  <script src="./js/auth.js"></script>
+  
+</body>
+</html>

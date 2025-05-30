@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الحجوزات</title>
+  <style>
+    /* التصميم الجديد */
+    :root {
+      --primary: #2A2F4F;
+      --secondary: #917FB3;
+      --light: #FDE2F3;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 80px 20px 20px;
+    }
+
+    .main-nav {
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      justify-content: flex-end;
+    }
+
+    .main-nav a {
+      color: var(--primary);
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+    }
+
+    .main-nav a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-nav a:hover {
+      background: rgba(var(--primary), 0.1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .filter-section {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    #statusFilter {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid #ddd;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    .status-select {
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius);
+      border: 1px solid #ddd;
+      background: white;
+    }
+
+    button {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="products.html">المنتجات</a></li>
+      <li><a href="bookings.html" class="active">الحجوزات</a></li>
+      <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>إدارة الحجوزات</h1>
+    
+    <div class="filter-section">
+      <label>فلترة حسب الحالة:</label>
+      <select id="statusFilter" onchange="loadBookings(this.value)">
+        <option value="">الكل</option>
+        <option value="pending">قيد الانتظار</option>
+        <option value="approved">مقبولة</option>
+        <option value="rejected">مرفوضة</option>
+      </select>
+    </div>
+
+    <table id="bookingsTable">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>التاريخ</th>
+          <th>عدد الأشخاص</th>
+          <th>الهاتف</th>
+          <th>الحالة</th>
+          <th>الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody id="bookingsBody"></tbody>
+    </table>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    // نفس الدوال السابقة بدون تغيير
+    async function loadBookings(status = '') {
+      try {
+        const path = `/bookings${status ? `?status=${status}` : ''}`;
+        const bookings = await apiRequest(path);
+        renderBookings(bookings);
+      } catch (err) {
+        alert('فشل في تحميل الحجوزات');
+      }
+    }
+
+    function renderBookings(bookings) {
+      const tbody = document.getElementById('bookingsBody');
+      tbody.innerHTML = bookings.map(booking => `
+        <tr>
+          <td>${booking.customerName}</td>
+          <td>${new Date(booking.date).toLocaleDateString('ar-EG')}</td>
+          <td>${booking.numberOfPeople}</td>
+          <td>${booking.phone}</td>
+          <td>
+            <select class="status-select" 
+                    data-id="${booking._id}" 
+                    onchange="updateStatus('${booking._id}', this.value)">
+              <option value="pending" ${booking.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
+              <option value="approved" ${booking.status === 'approved' ? 'selected' : ''}>مقبولة</option>
+              <option value="rejected" ${booking.status === 'rejected' ? 'selected' : ''}>مرفوضة</option>
+            </select>
+          </td>
+          <td>
+            <button onclick="deleteBooking('${booking._id}')">حذف</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function updateStatus(id, status) {
+      try {
+        await apiRequest(`/bookings/${id}/status`, 'PATCH', { status });
+        loadBookings(document.getElementById('statusFilter').value);
+      } catch (err) {
+        alert('فشل في تحديث الحالة');
+      }
+    }
+
+    async function deleteBooking(id) {
+      if (!confirm('هل تريد حذف هذا الحجز؟')) return;
+      try {
+        await apiRequest(`/bookings/${id}`, 'DELETE');
+        loadBookings(document.getElementById('statusFilter').value);
+      } catch (err) {
+        alert('فشل في حذف الحجز');
+      }
+    }
+
+    // تحميل الحجوزات عند فتح الصفحة
+    loadBookings();
+  </script>
+</body>
+</html>
