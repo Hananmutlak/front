@@ -1,5 +1,5 @@
 useEffect(() => {
-  axios.get('https://restaurant-backend-aelo.onrender.com//api/bookings')
+  axios.get('https://restaurant-backend-1-68of.onrender.com//api/bookings')
     .then(res => {
       setBookings(res.data);
     })

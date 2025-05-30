@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-fetch("https://restaurant-backend-aelo.onrender.com//api/bookings")
+fetch("https://restaurant-backend-1-68of.onrender.com//api/bookings")
     .then(res => {
       if (!res.ok) throw new Error("Network response was not ok");
       return res.json();

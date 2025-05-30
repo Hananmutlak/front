@@ -1,4 +1,4 @@
-const API_BASE = 'https://restaurant-backend-aelo.onrender.com//api';
+const API_BASE = 'https://restaurant-backend-1-68of.onrender.com//api';
 
 function getToken() {
   return localStorage.getItem('token');

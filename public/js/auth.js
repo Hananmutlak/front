@@ -14,7 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
   
   try {
     // المسار الصحيح - بدون // الزائدة
-    const API_URL = 'https://restaurant-backend-aelo.onrender.com/api/auth/login';
+    const API_URL = 'https://restaurant-backend-1-68of.onrender.com/api/auth/login';
     
     const response = await fetch(API_URL, {
       method: 'POST',
