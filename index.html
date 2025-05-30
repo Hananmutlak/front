@@ -3,34 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إدارة الحجوزات</title>
-  <link rel="stylesheet" href="./css/main.css">
+  <title>تسجيل الدخول</title>
+  <link rel="stylesheet" href="./public/css/main.css">
 </head>
-<body> <script>
-  // فقط تحقق إذا في توكن، وإذا موجود روح لصفحة dashboard.html مباشرة
-  if (localStorage.getItem('token')) {
-    window.location.href = 'dashboard.html'; // أو اسم صفحة لوحة التحكم
-  }
-</script>
-  <nav class="main-nav">
-    <ul>
-      <li><a href="products.html">المنتجات</a></li>
-      <li><a href="bookings.html" class="active">الحجوزات</a></li>
-      <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
-    </ul>
-  </nav>
-  
+<body>
+  <div class="auth-container">
+    <div class="login-card">
+     <div class="logo">
+  <div style="font-size: 3rem; color: #2A2F4F;">🍽️</div>
+  <h1>نظام إدارة المطعم</h1>
+</div>
+      <h2>مرحبًا بك في نظام الإدارة</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <input type="email" id="email" required>
+          <label>البريد الإلكتروني</label>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" id="password" required>
+          <label>كلمة المرور</label>
+        </div>
 
-  <div class="login-container">
-    <h2>تسجيل الدخول</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">دخول</button>
-    </form>
-    <p id="loginError" class="error"></p>
+        <button type="submit" class="glow-btn">
+          <span>دخول</span>
+          <div class="glow"></div>
+        </button>
+      </form>
+      <p id="loginError" class="error-message"></p>
+    </div>
   </div>
-  <script src="./js/auth.js"></script>
-  
+
+  <script src="./public/js/auth.js"></script>
 </body>
 </html>
