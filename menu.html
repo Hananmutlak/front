@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الطعام - مطعم ميلانو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* تصنيفات القائمة */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: #f8f9fa;
+            border: 2px solid #2A2F4F;
+            color: #2A2F4F;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #2A2F4F;
+            color: white;
+        }
+
+        /* عناصر القائمة */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #917FB3;
+            font-size: 1.2em;
+        }
+
+        .item-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* حالة التحميل والخطأ */
+        .loading, .error, .empty {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #2A2F4F;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Milan<span>o</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="menu.html" class="active">القائمة</a></li>
+                    <li><a href="booking.html">الحجز</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Pizza Menu Section -->
+    <section id="menu" class="section">
+        <h2 class="section-title">قائمة الطعام</h2>
+        <p class="section-subtitle">اكتشف تشكيلتنا اللذيذة من المأكولات الإيطالية الأصيلة المصنوعة من أرقى المكونات</p>
+        
+        <!-- تصنيفات القائمة -->
+        <div class="menu-categories">
+            <button class="category-btn active" data-category="pizza">البيتزا</button>
+            <button class="category-btn" data-category="appetizer">المقبلات</button>
+            <button class="category-btn" data-category="dessert">الحلويات</button>
+            <button class="category-btn" data-category="drink">المشروبات</button>
+        </div>
+        
+        <!-- حاوية العناصر الديناميكية -->
+        <div class="menu-container" id="menuContainer">
+            <!-- سيتم ملؤها بالمنتجات من خلال JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <!-- ... بقية الفوتر ... -->
+    </footer>
+
+    <!-- Admin Access Link -->
+    <a href="./public/login.html" class="admin-link">
+        <i class="fas fa-lock"></i> وصول الإدارة
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'https://restaurant-backend-1-68of.onrender.com/api/products';
+            const menuContainer = document.getElementById('menuContainer');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+
+            // دالة لجلب وعرض المنتجات
+            async function loadMenu(category = 'pizza') {
+                try {
+                    menuContainer.innerHTML = '<div class="loading">جاري تحميل القائمة...</div>';
+                    
+                    const response = await fetch(`${API_URL}?category=${category}`);
+                    if (!response.ok) throw new Error('خطأ في جلب البيانات');
+                    
+                    const products = await response.json();
+                    renderMenu(products, category);
+                } catch (error) {
+                    menuContainer.innerHTML = `<div class="error">${error.message}</div>`;
+                }
+            }
+
+            // دالة لعرض المنتجات
+            function renderMenu(products, category) {
+                if (products.length === 0) {
+                    menuContainer.innerHTML = `<div class="empty">لا توجد منتجات في هذا القسم</div>`;
+                    return;
+                }
+
+                let menuHTML = '';
+                
+                // قسم البيتزا
+                if (category === 'pizza') {
+                    menuHTML = `
+                        <table class="pizza-table">
+                            <thead>
+                                <tr>
+                                    <th>البيتزا</th>
+                                    <th>المكونات</th>
+                                    <th>السعر (ريال)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${products.map(product => `
+                                    <tr>
+                                        <td>
+                                            <div class="pizza-type">
+                                                <i class="fas fa-pizza-slice pizza-icon"></i>
+                                                ${product.name}
+                                            </div>
+                                        </td>
+                                        <td>${product.description || 'لا يوجد وصف'}</td>
+                                        <td>${product.price}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+                // الأقسام الأخرى
+                else {
+                    menuHTML = `
+                        <div class="menu-grid">
+                            ${products.map(product => `
+                                <div class="menu-item">
+                                    <div class="item-header">
+                                        <h3>${product.name}</h3>
+                                        <span class="item-price">${product.price} ريال</span>
+                                    </div>
+                                    <p class="item-description">${product.description || 'لا يوجد وصف'}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                menuContainer.innerHTML = menuHTML;
+            }
+
+            // تبديل التصنيفات
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    loadMenu(btn.dataset.category);
+                });
+            });
+
+            // تحميل القائمة الافتراضية
+            loadMenu();
+        });
+    </script>
+</body>
+</html>
