@@ -294,18 +294,42 @@
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-
+        
+        /* New Booking Form Styles */
+        .booking-form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .booking-form-header h2 {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .booking-form-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
         .form-group {
             margin-bottom: 25px;
+            position: relative;
         }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--secondary);
+            display: flex;
+            align-items: center;
         }
-
+        
+        .form-group label i {
+            margin-left: 10px;
+            color: var(--secondary);
+        }
+        
         .form-control {
             width: 100%;
             padding: 14px;
@@ -316,56 +340,109 @@
             font-size: 16px;
             transition: var(--transition);
         }
-
+        
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(193, 39, 45, 0.1);
         }
-
+        
         .form-row {
             display: flex;
             gap: 20px;
             margin-bottom: 25px;
         }
-
+        
         .form-row .form-group {
             flex: 1;
             margin-bottom: 0;
         }
-
+        
         .submit-btn {
-            background: var(--primary);
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--primary), #9c1d22);
             color: white;
             border: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: var(--transition);
-            width: 100%;
-            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
-
+        
         .submit-btn:hover {
-            background: #9c1d22;
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-
-        .booking-success {
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .submit-btn:disabled::before {
             display: none;
-            text-align: center;
-            padding: 30px;
-            background: rgba(39, 174, 96, 0.2);
-            border-radius: 10px;
-            margin-top: 30px;
         }
-
-        .booking-success i {
-            font-size: 50px;
+        
+        #message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(46, 204, 113, 0.2);
             color: #27ae60;
-            margin-bottom: 20px;
+            border: 1px solid #27ae60;
+        }
+        
+        .error {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            border: 1px solid #c0392b;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Footer */
@@ -608,6 +685,11 @@
             .booking-container {
                 padding: 25px;
             }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -713,63 +795,54 @@
 
     <!-- Booking Section -->
     <section id="booking" class="booking-section">
-        <h2 class="section-title">احجز طاولتك الآن</h2>
-        <p class="section-subtitle">احجز تجربة طعام لا تُنسى في ميلانو</p>
-        
         <div class="booking-container">
+            <div class="booking-form-header">
+                <h2>احجز طاولتك الآن</h2>
+                <p>احجز تجربة طعام لا تُنسى في ميلانو</p>
+            </div>
+            
             <form id="bookingForm">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">الاسم الكامل</label>
-                        <input type="text" id="name" class="form-control" required>
+                        <label for="customerName"><i class="fas fa-user"></i> الاسم الكامل</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="ادخل اسمك الكامل" required>
                     </div>
+                    
                     <div class="form-group">
-                        <label for="phone">رقم الهاتف</label>
-                        <input type="tel" id="phone" class="form-control" required>
+                        <label for="bookingDate"><i class="fas fa-calendar"></i> تاريخ الحجز</label>
+                        <input type="date" id="bookingDate" class="form-control" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="date">التاريخ</label>
-                        <input type="date" id="date" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="time">الوقت</label>
-                        <input type="time" id="time" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="people">عدد الأشخاص</label>
-                        <select id="people" class="form-control" required>
-                            <option value="1">شخص واحد</option>
-                            <option value="2" selected>شخصين</option>
+                        <label for="peopleCount"><i class="fas fa-users"></i> عدد الأشخاص</label>
+                        <select id="peopleCount" class="form-control" required>
+                            <option value="" disabled selected>اختر عدد الأشخاص</option>
+                            <option value="1">1 شخص</option>
+                            <option value="2">2 أشخاص</option>
                             <option value="3">3 أشخاص</option>
                             <option value="4">4 أشخاص</option>
                             <option value="5">5 أشخاص</option>
                             <option value="6">6 أشخاص</option>
                             <option value="7">7 أشخاص</option>
                             <option value="8">8 أشخاص</option>
-                            <option value="9">9 أشخاص</option>
-                            <option value="10">10 أشخاص</option>
-                            <option value="more">أكثر من 10 أشخاص</option>
                         </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="ادخل رقم هاتفك" pattern="[0-9]{10}" required>
+                        <small style="display: block; margin-top: 5px; color: rgba(255, 255, 255, 0.7);">يجب أن يتكون الرقم من 10 أرقام</small>
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="notes">ملاحظات إضافية (اختياري)</label>
-                    <textarea id="notes" class="form-control" rows="3"></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">تأكيد الحجز</button>
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    <span id="btnText">تأكيد الحجز</span>
+                </button>
             </form>
             
-            <div class="booking-success" id="bookingSuccess">
-                <i class="fas fa-check-circle"></i>
-                <h3>تم الحجز بنجاح!</h3>
-                <p>شكراً لك على حجز طاولتك في مطعم ميلانو</p>
-                <p>سيصلك تأكيد الحجز عبر رسالة نصية</p>
-            </div>
+            <div id="message"></div>
         </div>
     </section>
 
@@ -887,51 +960,94 @@
         });
 
         // Booking form submission
-        const bookingForm = document.getElementById('bookingForm');
-        const bookingSuccess = document.getElementById('bookingSuccess');
-        
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function() {
+            // تعيين تاريخ اليوم كحد أدنى
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = today;
             
-            // Get form values
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
-            const people = document.getElementById('people').value;
-            const notes = document.getElementById('notes').value;
-            
-            // Create booking object
-            const booking = {
-                customerName: name,
-                phone: phone,
-                date: `${date}T${time}:00.000Z`,
-                numberOfPeople: people,
-                notes: notes,
-                status: "pending"
-            };
-            
-            // Here you would send the booking to your backend API
-            // For demonstration, we'll simulate the API call
-            setTimeout(() => {
-                // Hide form and show success message
-                bookingForm.style.display = 'none';
-                bookingSuccess.style.display = 'block';
-                
-                // Reset form after 5 seconds
-                setTimeout(() => {
-                    bookingForm.reset();
-                    bookingForm.style.display = 'block';
-                    bookingSuccess.style.display = 'none';
-                }, 5000);
-            }, 1500);
-            
-            console.log('Booking submitted:', booking);
+            // تعيين تاريخ غد كقيمة افتراضية
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
         });
 
-        // Set min date for booking (today)
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').setAttribute('min', today);
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const messageDiv = document.getElementById('message');
+            
+            // تعطيل الزر أثناء المعالجة
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span> جاري إتمام الحجز...';
+            messageDiv.style.display = 'none';
+            
+            const bookingData = {
+                customerName: document.getElementById('customerName').value,
+                date: document.getElementById('bookingDate').value,
+                numberOfPeople: parseInt(document.getElementById('peopleCount').value),
+                phone: document.getElementById('phone').value
+            };
+
+            try {
+                // المسار الصحيح للإرسال
+                const response = await fetch('https://restaurant-backend-aelo.onrender.com/api/bookings', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    messageDiv.innerHTML = `
+                        <div class="success">
+                            <h3><i class="fas fa-check-circle"></i> تم الحجز بنجاح!</h3>
+                            <p>شكرًا ${bookingData.customerName} على حجزك في مطعمنا.</p>
+                            <p>رقم الحجز: <strong>${data._id}</strong></p>
+                            <p>تاريخ الحجز: <strong>${new Date(bookingData.date).toLocaleDateString('ar-EG')}</strong></p>
+                            <p>عدد الأشخاص: <strong>${bookingData.numberOfPeople}</strong></p>
+                            <p>سنقوم بالاتصال بك على الرقم <strong>${bookingData.phone}</strong> لتأكيد الحجز.</p>
+                        </div>
+                    `;
+                    
+                    // إعادة تعيين النموذج
+                    document.getElementById('bookingForm').reset();
+                    
+                    // تعيين تاريخ غد كقيمة افتراضية
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
+                } else {
+                    // محاولة قراءة رسالة الخطأ من الخادم
+                    try {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'فشل في الحجز');
+                    } catch {
+                        throw new Error(`فشل في الحجز (${response.status})`);
+                    }
+                }
+            } catch (error) {
+                messageDiv.innerHTML = `
+                    <div class="error">
+                        <h3><i class="fas fa-exclamation-circle"></i> خطأ في الحجز</h3>
+                        <p>${error.message}</p>
+                        <p>يرجى المحاولة مرة أخرى أو الاتصال بنا للحصول على المساعدة.</p>
+                    </div>
+                `;
+            } finally {
+                messageDiv.style.display = 'block';
+                submitBtn.disabled = false;
+                btnText.textContent = 'تأكيد الحجز';
+                
+                // التمرير إلى الرسالة
+                messageDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
     </script>
 </body>
 </html>
