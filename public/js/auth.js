@@ -1,4 +1,3 @@
-// ملف auth.js المعدل
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -7,13 +6,12 @@ document.getElementById('loginForm').addEventListener('submit', async function (
   const errorElement = document.getElementById('loginError');
   const submitButton = this.querySelector('button[type="submit"]');
 
-  // إظهار حالة التحميل
+  // Show loading state
   submitButton.disabled = true;
-  submitButton.innerHTML = '<span>جاري التحقق...</span><div class="glow"></div>';
+  submitButton.innerHTML = '<span>Verifying...</span><div class="glow"></div>';
   errorElement.textContent = '';
   
   try {
-    // المسار الصحيح - بدون // الزائدة
     const API_URL = 'https://restaurant-backend-1-68of.onrender.com/api/auth/login';
     
     const response = await fetch(API_URL, {
@@ -25,36 +23,32 @@ document.getElementById('loginForm').addEventListener('submit', async function (
       body: JSON.stringify({ email, password })
     });
 
-    // التحقق من حالة الرد أولاً
+    // Check response status first
     if (!response.ok) {
-      // إذا كان الرد غير ناجح، حاول قراءة النص أولاً
       const text = await response.text();
       try {
-        // حاول تحليل النص كـ JSON
         const data = JSON.parse(text);
-        throw new Error(data.message || `خطأ في الخادم: ${response.status}`);
+        throw new Error(data.message || `Server error: ${response.status}`);
       } catch {
-        // إذا فشل التحليل، استخدم النص كما هو
-        throw new Error(text || `طلب فاشل: ${response.status}`);
+        throw new Error(text || `Request failed: ${response.status}`);
       }
     }
 
-    // إذا كان الرد ناجحاً، حلل البيانات كـ JSON
+    // Parse JSON if successful
     const data = await response.json();
     
     if (data.token) {
       localStorage.setItem('token', data.token);
       window.location.href = 'dashboard.html';
     } else {
-      throw new Error('لم يتم استلام التوكن من الخادم');
+      throw new Error('Token was not received from the server');
     }
   } catch (err) {
-    errorElement.textContent = err.message || 'حدث خطأ غير متوقع';
+    errorElement.textContent = err.message || 'An unexpected error occurred';
     errorElement.style.color = '#f44336';
     console.error('Login error:', err);
   } finally {
-    // إعادة تعيين حالة الزر
     submitButton.disabled = false;
-    submitButton.innerHTML = '<span>دخول</span><div class="glow"></div>';
+    submitButton.innerHTML = '<span>Login</span><div class="glow"></div>';
   }
 });

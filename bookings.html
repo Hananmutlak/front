@@ -1,74 +1,82 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حجز طاولة - مطعم ميلانو</title>
+    <title>Table Reservation - Milano Restaurant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <!-- Header -->
-    <header>
+         <header>
         <div class="header-container">
             <a href="index.html" class="logo">Milan<span>o</span></a>
             <nav>
                 <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="menu.html">القائمة</a></li>
-                    <li><a href="booking.html" class="active">الحجز</a></li>
-                    <li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About Milano</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="bookings.html">Reservations</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </nav>
+            <button class="hamburger" id="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </header>
+
+
 
     <!-- Booking Section -->
     <section id="booking" class="booking-section">
         <div class="booking-container">
             <div class="booking-form-header">
-                <h2>احجز طاولتك الآن</h2>
-                <p>احجز تجربة طعام لا تُنسى في ميلانو</p>
+                <h2>Book Your Table Now</h2>
+                <p>Reserve an unforgettable dining experience at Milano</p>
             </div>
             
             <form id="bookingForm">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="customerName"><i class="fas fa-user"></i> الاسم الكامل</label>
-                        <input type="text" id="customerName" class="form-control" placeholder="ادخل اسمك الكامل" required>
+                        <label for="customerName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="Enter your full name" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="bookingDate"><i class="fas fa-calendar"></i> تاريخ الحجز</label>
+                        <label for="bookingDate"><i class="fas fa-calendar"></i> Reservation Date</label>
                         <input type="date" id="bookingDate" class="form-control" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="peopleCount"><i class="fas fa-users"></i> عدد الأشخاص</label>
+                        <label for="peopleCount"><i class="fas fa-users"></i> Number of People</label>
                         <select id="peopleCount" class="form-control" required>
-                            <option value="" disabled selected>اختر عدد الأشخاص</option>
-                            <option value="1">1 شخص</option>
-                            <option value="2">2 أشخاص</option>
-                            <option value="3">3 أشخاص</option>
-                            <option value="4">4 أشخاص</option>
-                            <option value="5">5 أشخاص</option>
-                            <option value="6">6 أشخاص</option>
-                            <option value="7">7 أشخاص</option>
-                            <option value="8">8 أشخاص</option>
+                            <option value="" disabled selected>Select number of people</option>
+                            <option value="1">1 person</option>
+                            <option value="2">2 people</option>
+                            <option value="3">3 people</option>
+                            <option value="4">4 people</option>
+                            <option value="5">5 people</option>
+                            <option value="6">6 people</option>
+                            <option value="7">7 people</option>
+                            <option value="8">8 people</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="phone"><i class="fas fa-phone"></i> رقم الهاتف</label>
-                        <input type="tel" id="phone" class="form-control" placeholder="ادخل رقم هاتفك" pattern="[0-9]{10}" required>
-                        <small style="display: block; margin-top: 5px; color: rgba(255, 255, 255, 0.7);">يجب أن يتكون الرقم من 10 أرقام</small>
+                        <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+                        <small style="display: block; margin-top: 5px; color: rgba(255, 255, 255, 0.7);">Must be 10 digits</small>
                     </div>
                 </div>
                 
                 <button type="submit" id="submitBtn" class="submit-btn">
-                    <span id="btnText">تأكيد الحجز</span>
+                    <span id="btnText">Confirm Reservation</span>
                 </button>
             </form>
             
@@ -80,47 +88,47 @@
     <footer id="contact">
         <div class="footer-container">
             <div class="footer-section">
-                <h3>معلومات الاتصال</h3>
+                <h3>Contact Information</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt"></i> شارع التحلية، الرياض، المملكة العربية السعودية</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Tahlia Street, Riyadh, Saudi Arabia</li>
                     <li><i class="fas fa-phone"></i> +966 11 123 4567</li>
                     <li><i class="fas fa-envelope"></i> info@milano-pizza.com</li>
                 </ul>
             </div>
             
             <div class="footer-section">
-                <h3>ساعات العمل</h3>
+                <h3>Opening Hours</h3>
                 <div class="opening-hours">
-                    <p><span>الأحد - الخميس:</span> 12:00 ظهراً - 11:00 مساءً</p>
-                    <p><span>الجمعة والسبت:</span> 1:00 ظهراً - 12:00 منتصف الليل</p>
-                    <p><span>صلاة الجمعة:</span> مغلق حتى 4:00 مساءً</p>
+                    <p><span>Sunday - Thursday:</span> 12:00 PM - 11:00 PM</p>
+                    <p><span>Friday & Saturday:</span> 1:00 PM - 12:00 AM</p>
+                    <p><span>Friday Prayer:</span> Closed until 4:00 PM</p>
                 </div>
             </div>
             
             <div class="footer-section">
-                <h3>الإعدادات</h3>
+                <h3>Settings</h3>
                 <div class="settings-options">
                     <button class="setting-btn">
-                        <i class="fas fa-book-reader"></i> قراءة الصفحة
+                        <i class="fas fa-book-reader"></i> Read Page
                     </button>
                     <button class="setting-btn">
-                        <i class="fas fa-language"></i> English
+                        <i class="fas fa-language"></i> العربية
                     </button>
                     <button class="setting-btn" id="nightModeBtn">
-                        <i class="fas fa-moon"></i> الوضع الليلي
+                        <i class="fas fa-moon"></i> Night Mode
                     </button>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2023 مطعم ميلانو للبيتزا الإيطالية. جميع الحقوق محفوظة.</p>
+            <p>&copy; 2023 Milano Italian Pizza Restaurant. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Admin Access Link -->
     <a href="./public/login.html" class="admin-link">
-        <i class="fas fa-lock"></i> وصول الإدارة
+        <i class="fas fa-lock"></i> Admin Access
     </a>
 
     <script src="./js/scripts.js"></script>

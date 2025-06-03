@@ -1,8 +1,6 @@
-// js/products.js
-
 async function loadProducts() {
   try {
-    const products = await apiRequest('/products'); // ← API endpoint
+    const products = await apiRequest('/products'); 
     const container = document.getElementById('productList');
     container.innerHTML = '';
 
@@ -10,24 +8,24 @@ async function loadProducts() {
       const div = document.createElement('div');
       div.innerHTML = `
         <h3>${p.title}</h3>
-        <p>السعر: ${p.price}</p>
+        <p>Price: ${p.price}</p>
         <p>${p.description}</p>
-        <button onclick="deleteProduct('${p._id}')">🗑️ حذف</button>
+        <button onclick="deleteProduct('${p._id}')"> Delete</button>
       `;
       container.appendChild(div);
     });
   } catch (err) {
-    alert('خطأ في تحميل المنتجات');
+    alert('Error loading products');
   }
 }
 
 async function deleteProduct(id) {
-  if (!confirm('هل أنت متأكد من حذف المنتج؟')) return;
+  if (!confirm('Are you sure you want to delete this product?')) return;
   try {
     await apiRequest(`/products/${id}`, 'DELETE');
     loadProducts();
   } catch (err) {
-    alert('فشل الحذف');
+    alert('Failed to delete the product');
   }
 }
 
@@ -42,7 +40,7 @@ document.getElementById('addProductForm').addEventListener('submit', async funct
     loadProducts();
     this.reset();
   } catch (err) {
-    alert('فشل في إضافة المنتج');
+    alert('Failed to add the product');
   }
 });
 

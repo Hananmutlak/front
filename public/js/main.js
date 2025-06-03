@@ -34,11 +34,11 @@ function showConfirmModal(message, confirmCallback) {
   };
 }
 
-// تهيئة الصفحة
+
 document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.remove('page-transition');
   
-  // إضافة تأثير الريبل
+
   document.querySelectorAll('button').forEach(btn => {
     btn.addEventListener('click', function(e) {
       this.classList.add('ripple-effect');

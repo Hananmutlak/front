@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إدارة المنتجات</title>
-  <link rel="stylesheet" href="./css/main.css">
+  <title>Product Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #2A2F4F;
@@ -14,8 +14,14 @@
       --radius: 12px;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Tajawal', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f8f9fa;
       margin: 0;
       padding: 80px 20px 20px;
@@ -29,6 +35,22 @@
       width: 100%;
       padding: 1rem;
       z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo span {
+      color: var(--secondary);
     }
 
     .main-nav ul {
@@ -37,7 +59,6 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      justify-content: flex-end;
     }
 
     .main-nav a {
@@ -46,6 +67,10 @@
       padding: 0.8rem 1.5rem;
       border-radius: var(--radius);
       transition: all 0.3s ease;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .main-nav a.active {
@@ -54,7 +79,7 @@
     }
 
     .main-nav a:hover {
-      background: rgba(var(--primary), 0.1);
+      background: rgba(42, 47, 79, 0.1);
     }
 
     .container {
@@ -64,6 +89,39 @@
       padding: 2rem;
       border-radius: var(--radius);
       box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .page-header h1 {
+      color: var(--primary);
+      font-size: 2.2rem;
+    }
+
+    .add-product-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .add-product-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
 
     .product-grid {
@@ -104,6 +162,16 @@
       margin: 10px 0;
     }
 
+    .product-category {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      background: #e0e0ff;
+      color: var(--primary);
+      margin-top: 5px;
+    }
+
     .product-status {
       display: inline-block;
       padding: 0.3rem 0.8rem;
@@ -135,6 +203,10 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
 
     .btn-edit {
@@ -160,6 +232,14 @@
       padding: 2rem;
       border-radius: var(--radius);
       box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+    }
+
+    .form-title {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
     }
 
     .form-group {
@@ -180,6 +260,7 @@
       border-radius: var(--radius);
       font-size: 1rem;
       transition: all 0.3s ease;
+      font-family: inherit;
     }
 
     .form-control:focus {
@@ -210,7 +291,9 @@
       padding: 1rem;
       border-radius: var(--radius);
       margin-bottom: 1rem;
-      display: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .alert-success {
@@ -245,76 +328,96 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    .empty-products {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .empty-products i {
+      font-size: 3rem;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
   <nav class="main-nav">
     <ul>
-      <li><a href="products.html" class="active">المنتجات</a></li>
-      <li><a href="bookings.html">الحجوزات</a></li>
-      <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
+      <li><a href="products.html"><i class="fas fa-utensils"></i> Products</a></li>
+      <li><a href="bookings.html" class="active"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+       <li><a href="dashboard.html" class="active"><i class="fas fa-calendar-check"></i> dashboard</a></li>
+      
+      <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </nav>
 
   <div class="container">
-    <h1>إدارة المنتجات</h1>
+    <div class="page-header">
+      <h1>Product Management</h1>
+      <button class="add-product-btn" id="newProductBtn">
+        <i class="fas fa-plus"></i> Add Product
+      </button>
+    </div>
     
     <div class="alert" id="alertMessage"></div>
     
     <div class="loading" id="loadingIndicator">
       <div class="loading-spinner"></div>
-      <p>جاري تحميل المنتجات...</p>
+      <p>Loading products...</p>
     </div>
     
-    <div class="product-grid" id="productsContainer"></div>
+    <div class="product-grid" id="productsContainer">
+      <!-- Products will be loaded here -->
+    </div>
     
-    <div class="form-container">
-      <h2 id="formTitle">إضافة منتج جديد</h2>
+    <div class="form-container" id="formContainer">
+      <h2 class="form-title" id="formTitle">Add New Product</h2>
       <form id="productForm">
         <input type="hidden" id="productId">
         
         <div class="form-group">
-          <label for="productName">اسم المنتج</label>
+          <label for="productName">Product Name</label>
           <input type="text" id="productName" class="form-control" required>
         </div>
         
         <div class="form-group">
-          <label for="productDescription">الوصف</label>
+          <label for="productDescription">Description</label>
           <textarea id="productDescription" class="form-control" rows="3"></textarea>
         </div>
         
         <div class="form-group">
-          <label for="productPrice">السعر (ريال)</label>
+          <label for="productPrice">Price (SEK)</label>
           <input type="number" id="productPrice" class="form-control" min="0" step="0.01" required>
         </div>
         
-        <!-- حقل جديد لنوع البيتزا -->
         <div class="form-group">
-          <label for="productCategory">نوع البيتزا</label>
+          <label for="productCategory">Category</label>
           <select id="productCategory" class="form-control" required>
-            <option value="pizza">بيتزا</option>
-            <option value="appetizer">مقبلات</option>
-            <option value="dessert">حلويات</option>
-            <option value="drink">مشروبات</option>
+            <option value="pizza">Pizza</option>
+            <option value="appetizer">Appetizers</option>
+            <option value="dessert">Desserts</option>
+            <option value="drink">Drinks</option>
           </select>
         </div>
         
         <div class="form-group">
           <label for="productAvailable">
-            <input type="checkbox" id="productAvailable"> متوفر
+            <input type="checkbox" id="productAvailable"> Available
           </label>
         </div>
         
         <div class="form-actions">
-          <button type="submit" class="btn btn-submit" id="submitBtn">حفظ المنتج</button>
-          <button type="button" class="btn btn-cancel" id="resetBtn">إلغاء</button>
+          <button type="submit" class="btn btn-submit" id="submitBtn">Save Product</button>
+          <button type="button" class="btn btn-cancel" id="resetBtn">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // التحقق من وجود توكن صالح
+    // Check for valid token
     document.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -322,9 +425,22 @@
       } else {
         fetchProducts();
       }
+      
+      // New product button
+      document.getElementById('newProductBtn').addEventListener('click', () => {
+        document.getElementById('productForm').reset();
+        document.getElementById('productId').value = '';
+        document.getElementById('formTitle').textContent = 'Add New Product';
+        document.getElementById('submitBtn').textContent = 'Save Product';
+        
+        // Scroll to form
+        document.getElementById('formContainer').scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
     
-    // عناصر DOM
+    // DOM elements
     const container = document.getElementById('productsContainer');
     const form = document.getElementById('productForm');
     const loadingIndicator = document.getElementById('loadingIndicator');
@@ -332,21 +448,24 @@
     const formTitle = document.getElementById('formTitle');
     const submitBtn = document.getElementById('submitBtn');
     
-    // API الأساسي
+    // Base API
     const API_BASE = 'https://restaurant-backend-1-68of.onrender.com/api';
     
-    // دالة لعرض الرسائل
+    // Function to show alerts
     function showAlert(message, type = 'success') {
-      alertMessage.textContent = message;
+      alertMessage.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+      `;
       alertMessage.className = `alert alert-${type}`;
-      alertMessage.style.display = 'block';
+      alertMessage.style.display = 'flex';
       
       setTimeout(() => {
         alertMessage.style.display = 'none';
       }, 5000);
     }
     
-    // دالة لتحميل المنتجات
+    // Function to load products
     async function fetchProducts() {
       try {
         loadingIndicator.style.display = 'block';
@@ -360,25 +479,31 @@
         });
         
         if (!response.ok) {
-          throw new Error('فشل في تحميل المنتجات');
+          throw new Error('Failed to load products');
         }
         
         const products = await response.json();
         renderProducts(products);
       } catch (error) {
-        showAlert(`خطأ: ${error.message}`, 'error');
+        showAlert(`Error: ${error.message}`, 'error');
         console.error('Error fetching products:', error);
       } finally {
         loadingIndicator.style.display = 'none';
       }
     }
     
-    // دالة لعرض المنتجات
+    // Function to render products
     function renderProducts(products) {
       container.innerHTML = '';
       
       if (products.length === 0) {
-        container.innerHTML = '<p>لا توجد منتجات متاحة</p>';
+        container.innerHTML = `
+          <div class="empty-products">
+            <i class="fas fa-pizza-slice"></i>
+            <h3>No Products Found</h3>
+            <p>Add your first product using the form below</p>
+          </div>
+        `;
         return;
       }
       
@@ -390,15 +515,20 @@
             <h3>${product.name}</h3>
           </div>
           <div class="product-body">
-            <p>${product.description || 'لا يوجد وصف'}</p>
-            <div class="product-price">${product.price} ريال</div>
+            <p>${product.description || 'No description available'}</p>
+            <div class="product-price">${product.price} SEK</div>
             <div class="product-category">${getCategoryName(product.category)}</div>
             <div class="product-status ${product.isAvailable ? 'product-available' : 'product-unavailable'}">
-              ${product.isAvailable ? 'متوفر' : 'غير متوفر'}
+              <i class="fas ${product.isAvailable ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+              ${product.isAvailable ? 'Available' : 'Unavailable'}
             </div>
             <div class="product-actions">
-              <button class="btn btn-edit" onclick="editProduct('${product._id}')">تعديل</button>
-              <button class="btn btn-delete" onclick="deleteProduct('${product._id}')">حذف</button>
+              <button class="btn btn-edit" onclick="editProduct('${product._id}')">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="btn btn-delete" onclick="deleteProduct('${product._id}')">
+                <i class="fas fa-trash"></i> Delete
+              </button>
             </div>
           </div>
         `;
@@ -406,18 +536,18 @@
       });
     }
     
-    // دالة لتحويل قيمة التصنيف إلى اسم عربي
+    // Function to get category name
     function getCategoryName(category) {
       const categories = {
-        'pizza': 'بيتزا',
-        'appetizer': 'مقبلات',
-        'dessert': 'حلويات',
-        'drink': 'مشروبات'
+        'pizza': 'Pizza',
+        'appetizer': 'Appetizer',
+        'dessert': 'Dessert',
+        'drink': 'Drink'
       };
       return categories[category] || category;
     }
     
-    // دالة لتعديل المنتج
+    // Function to edit product
     async function editProduct(id) {
       try {
         const token = localStorage.getItem('token');
@@ -428,12 +558,12 @@
         });
         
         if (!response.ok) {
-          throw new Error('فشل في جلب بيانات المنتج');
+          throw new Error('Failed to fetch product data');
         }
         
         const product = await response.json();
         
-        // تعبئة النموذج
+        // Fill the form
         document.getElementById('productId').value = product._id;
         document.getElementById('productName').value = product.name;
         document.getElementById('productDescription').value = product.description || '';
@@ -441,21 +571,21 @@
         document.getElementById('productCategory').value = product.category;
         document.getElementById('productAvailable').checked = product.isAvailable;
         
-        formTitle.textContent = 'تعديل المنتج';
-        submitBtn.textContent = 'تحديث المنتج';
+        formTitle.textContent = 'Edit Product';
+        submitBtn.textContent = 'Update Product';
         
-        // التمرير إلى النموذج
-        document.querySelector('.form-container').scrollIntoView({
+        // Scroll to form
+        document.getElementById('formContainer').scrollIntoView({
           behavior: 'smooth'
         });
       } catch (error) {
-        showAlert(`خطأ: ${error.message}`, 'error');
+        showAlert(`Error: ${error.message}`, 'error');
       }
     }
     
-    // دالة لحذف المنتج
+    // Function to delete product
     async function deleteProduct(id) {
-      if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+      if (!confirm('Are you sure you want to delete this product?')) return;
       
       try {
         const token = localStorage.getItem('token');
@@ -467,17 +597,17 @@
         });
         
         if (!response.ok) {
-          throw new Error('فشل في حذف المنتج');
+          throw new Error('Failed to delete product');
         }
         
-        showAlert('تم حذف المنتج بنجاح', 'success');
+        showAlert('Product deleted successfully', 'success');
         fetchProducts();
       } catch (error) {
-        showAlert(`خطأ: ${error.message}`, 'error');
+        showAlert(`Error: ${error.message}`, 'error');
       }
     }
     
-    // إرسال النموذج
+    // Form submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -502,7 +632,7 @@
       
       try {
         submitBtn.disabled = true;
-        submitBtn.textContent = 'جاري الحفظ...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
         
         const response = await fetch(url, {
           method,
@@ -515,44 +645,78 @@
         
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'فشل في حفظ المنتج');
+          throw new Error(errorData.message || 'Failed to save product');
         }
         
         const result = await response.json();
         
         showAlert(
-          id ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح', 
+          id ? 'Product updated successfully' : 'Product added successfully', 
           'success'
         );
         
-        // إعادة تعيين النموذج
+        // Reset form
         form.reset();
         document.getElementById('productId').value = '';
-        formTitle.textContent = 'إضافة منتج جديد';
-        submitBtn.textContent = 'حفظ المنتج';
+        formTitle.textContent = 'Add New Product';
+        submitBtn.textContent = 'Save Product';
         
-        // إعادة تحميل المنتجات
+        // Reload products
         fetchProducts();
       } catch (error) {
-        showAlert(`خطأ: ${error.message}`, 'error');
+        showAlert(`Error: ${error.message}`, 'error');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = id ? 'تحديث المنتج' : 'حفظ المنتج';
+        submitBtn.innerHTML = id ? '<i class="fas fa-sync-alt"></i> Update Product' : '<i class="fas fa-save"></i> Save Product';
       }
     });
     
-    // إلغاء التعديل
+    // Cancel button
     document.getElementById('resetBtn').addEventListener('click', () => {
       form.reset();
       document.getElementById('productId').value = '';
-      formTitle.textContent = 'إضافة منتج جديد';
-      submitBtn.textContent = 'حفظ المنتج';
+      formTitle.textContent = 'Add New Product';
+      submitBtn.textContent = 'Save Product';
     });
     
-    // تسجيل الخروج
+    // Logout function
     window.logout = function() {
       localStorage.removeItem('token');
       window.location.href = 'login.html';
+    };
+    
+    // Sample data for initial display
+    window.onload = function() {
+      setTimeout(() => {
+        const products = [
+          {
+            _id: "1",
+            name: "Margherita Pizza",
+            description: "Classic pizza with tomato sauce and mozzarella",
+            price: 99,
+            category: "pizza",
+            isAvailable: true
+          },
+          {
+            _id: "2",
+            name: "Garlic Bread",
+            description: "Freshly baked bread with garlic butter",
+            price: 45,
+            category: "appetizer",
+            isAvailable: true
+          },
+          {
+            _id: "3",
+            name: "Tiramisu",
+            description: "Classic Italian dessert with coffee flavor",
+            price: 65,
+            category: "dessert",
+            isAvailable: true
+          }
+        ];
+        
+        renderProducts(products);
+      }, 1000);
     };
   </script>
 </body>

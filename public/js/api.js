@@ -20,12 +20,12 @@ async function apiRequest(path, method = 'GET', body) {
     const data = await response.json();
     
     if (!response.ok) {
-      throw new Error(data.message || 'حدث خطأ في الخادم');
+      throw new Error(data.message || 'Server error occurred');
     }
     
     return data;
   } catch (error) {
-    console.error('خطأ في الاتصال بالخادم:', error);
+    console.error('Connection error with the server:', error);
     throw error;
   }
 }
