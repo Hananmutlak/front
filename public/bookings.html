@@ -40,18 +40,21 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .main-nav a {
       color: var(--primary);
       text-decoration: none;
-      padding: 0.8rem 1.5rem;
+      padding: 0.8rem 1.2rem;
       border-radius: var(--radius);
       transition: all 0.3s ease;
       font-weight: 500;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.9rem;
     }
 
     .main-nav a.active {
@@ -67,7 +70,7 @@
       max-width: 1200px;
       margin: 0 auto;
       background: white;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: var(--radius);
       box-shadow: 0 2px 15px rgba(0,0,0,0.1);
     }
@@ -84,6 +87,10 @@
     .header h1 {
       color: var(--primary);
       margin: 0;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
     }
 
     .filters {
@@ -96,12 +103,15 @@
     .filter-group {
       display: flex;
       flex-direction: column;
+      min-width: 150px;
+      flex: 1;
     }
 
     label {
       font-weight: 500;
       margin-bottom: 0.3rem;
       color: var(--dark);
+      font-size: 0.9rem;
     }
 
     select, input {
@@ -109,7 +119,8 @@
       border: 1px solid #ddd;
       border-radius: var(--radius);
       background: white;
-      min-width: 180px;
+      width: 100%;
+      font-size: 0.9rem;
     }
 
     .stats-cards {
@@ -150,6 +161,13 @@
       color: #6c757d;
     }
 
+    /* Responsive table container */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .bookings-table {
       width: 100%;
       border-collapse: collapse;
@@ -157,6 +175,7 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       border-radius: var(--radius);
       overflow: hidden;
+      min-width: 600px;
     }
 
     .bookings-table th {
@@ -218,10 +237,11 @@
     .actions {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0.8rem;
       border-radius: var(--radius);
       border: none;
       cursor: pointer;
@@ -230,6 +250,11 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .btn i {
+      font-size: 0.9rem;
     }
 
     .btn-approve {
@@ -313,6 +338,117 @@
       margin-bottom: 1rem;
       color: #bdc3c7;
     }
+
+    /* Mobile card view */
+    .mobile-bookings {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .booking-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 1.2rem;
+      border: 1px solid #eee;
+    }
+
+    .booking-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .booking-card-name {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .booking-card-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .booking-card-detail {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .booking-card-label {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-bottom: 0.2rem;
+    }
+
+    .booking-card-value {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 70px 15px 15px;
+      }
+      
+      .main-nav ul {
+        gap: 0.7rem;
+      }
+      
+      .main-nav a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .container {
+        padding: 1.2rem;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .filters {
+        width: 100%;
+      }
+      
+      .filter-group {
+        min-width: 120px;
+      }
+      
+      .stats-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .bookings-table {
+        display: none;
+      }
+      
+      .mobile-bookings {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .booking-card-details {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -376,19 +512,23 @@
     </div>
     
     <div id="bookingsContainer">
-      <table class="bookings-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>People</th>
-            <th>Phone</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="bookingsBody"></tbody>
-      </table>
+      <div class="table-container">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>People</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsBody"></tbody>
+        </table>
+      </div>
+      
+      <div class="mobile-bookings" id="mobileBookings"></div>
     </div>
   </div>
 
@@ -408,6 +548,7 @@
     
     // DOM elements
     const bookingsBody = document.getElementById('bookingsBody');
+    const mobileBookings = document.getElementById('mobileBookings');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const alertMessage = document.getElementById('alertMessage');
     const statusFilter = document.getElementById('statusFilter');
@@ -448,6 +589,7 @@
       try {
         loadingIndicator.style.display = 'block';
         bookingsBody.innerHTML = '';
+        mobileBookings.innerHTML = '';
         
         const token = localStorage.getItem('token');
         
@@ -481,8 +623,16 @@
               </td>
             </tr>
           `;
+          mobileBookings.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-calendar-times"></i>
+              <h3>No Bookings Found</h3>
+              <p>No bookings match your search criteria</p>
+            </div>
+          `;
         } else {
           renderBookings(bookings);
+          renderMobileBookings(bookings);
         }
         
         updateStats(bookings);
@@ -494,7 +644,7 @@
       }
     }
     
-    // Function to render bookings
+    // Function to render bookings for desktop
     function renderBookings(bookings) {
       bookingsBody.innerHTML = bookings.map(booking => {
         const date = new Date(booking.date);
@@ -540,6 +690,68 @@
               </div>
             </td>
           </tr>
+        `;
+      }).join('');
+    }
+    
+    // Function to render mobile bookings view
+    function renderMobileBookings(bookings) {
+      mobileBookings.innerHTML = bookings.map(booking => {
+        const date = new Date(booking.date);
+        const formattedDate = date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          weekday: 'short'
+        });
+        
+        const time = date.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        
+        return `
+          <div class="booking-card">
+            <div class="booking-card-header">
+              <div class="booking-card-name">${booking.customerName}</div>
+              <div class="status-badge status-${booking.status}">
+                ${getStatusText(booking.status)}
+              </div>
+            </div>
+            
+            <div class="booking-card-details">
+              <div class="booking-card-detail">
+                <span class="booking-card-label">Date</span>
+                <span class="booking-card-value">${formattedDate}</span>
+              </div>
+              <div class="booking-card-detail">
+                <span class="booking-card-label">Time</span>
+                <span class="booking-card-value">${time}</span>
+              </div>
+              <div class="booking-card-detail">
+                <span class="booking-card-label">People</span>
+                <span class="booking-card-value">${booking.numberOfPeople}</span>
+              </div>
+              <div class="booking-card-detail">
+                <span class="booking-card-label">Phone</span>
+                <span class="booking-card-value">${booking.phone}</span>
+              </div>
+            </div>
+            
+            <div class="actions">
+              ${booking.status === 'pending' ? `
+                <button class="btn btn-approve" onclick="updateStatus('${booking._id}', 'approved')">
+                  <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn btn-reject" onclick="updateStatus('${booking._id}', 'rejected')">
+                  <i class="fas fa-times"></i> Reject
+                </button>
+              ` : ''}
+              <button class="btn btn-delete" onclick="deleteBooking('${booking._id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
         `;
       }).join('');
     }
@@ -609,6 +821,49 @@
       localStorage.removeItem('token');
       window.location.href = 'login.html';
     }
+    
+    // Initialize with some sample data for demonstration
+    document.addEventListener('DOMContentLoaded', () => {
+      // Simulate loading with sample data
+      const sampleBookings = [
+        {
+          _id: "1",
+          customerName: "John Smith",
+          date: "2023-12-15T19:00:00.000Z",
+          numberOfPeople: 4,
+          phone: "555-1234",
+          status: "pending"
+        },
+        {
+          _id: "2",
+          customerName: "Emma Johnson",
+          date: "2023-12-16T20:30:00.000Z",
+          numberOfPeople: 2,
+          phone: "555-5678",
+          status: "approved"
+        },
+        {
+          _id: "3",
+          customerName: "Michael Brown",
+          date: "2023-12-14T18:00:00.000Z",
+          numberOfPeople: 6,
+          phone: "555-9012",
+          status: "rejected"
+        },
+        {
+          _id: "4",
+          customerName: "Sarah Williams",
+          date: "2023-12-17T19:45:00.000Z",
+          numberOfPeople: 3,
+          phone: "555-3456",
+          status: "pending"
+        }
+      ];
+      
+      renderBookings(sampleBookings);
+      renderMobileBookings(sampleBookings);
+      updateStats(sampleBookings);
+    });
   </script>
 </body>
 </html>
