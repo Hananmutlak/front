@@ -5,21 +5,522 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Milano Restaurant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #c1272d;
+            --secondary: #f4a261;
+            --dark: #2c2c2c;
+            --light: #f8f9fa;
+            --text: #333;
+            --text-light: #f8f9fa;
+            --overlay: rgba(0, 0, 0, 0.7);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #443838;
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 44, 44, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-right: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(193, 39, 45, 0.3);
+        }
+
+        /* Menu Section */
+        #menu {
+            padding: 150px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #ccc;
+        }
+
+        /* Menu categories */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0 50px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* Menu items */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background: rgba(44, 44, 44, 0.85);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border-color: rgba(244, 162, 97, 0.3);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .item-header h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.3em;
+        }
+
+        .item-description {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Pizza Table */
+        .pizza-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-light);
+            margin-top: 20px;
+        }
+
+        .pizza-table th {
+            background: rgba(244, 162, 97, 0.2);
+            padding: 18px 15px;
+            text-align: left;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .pizza-table td {
+            padding: 18px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pizza-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pizza-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .pizza-icon {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .pizza-type {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        /* Loading and error states */
+        .loading, .error, .empty {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: var(--text-light);
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .contact-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .opening-hours {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hours-row span {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Admin Link */
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .admin-link:hover {
+            background: #9c1d22;
+            transform: translateY(-3px);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hamburger:focus {
+            outline: none;
+        }
+
+        .hamburger-line {
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+            background: var(--primary);
+            width: 70%;
+            margin-left: 30%;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+            background: var(--primary);
+            width: 70%;
+            margin-left: 30%;
+        }
+
+        .hamburger.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border-radius: 0 0 0 40px;
+            border: 4px solid var(--secondary);
+            border-top: none;
+            border-right: none;
+            box-sizing: border-box;
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(44, 44, 44, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 20px 20px;
+            transition: right 0.4s ease-in-out;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 12px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover, .mobile-nav a.active {
+            background: rgba(193, 39, 45, 0.3);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 800;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 0;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            #menu {
+                padding-top: 120px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .category-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                flex-direction: row;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
-  
     <header>
         <div class="header-container">
-            <a href="indexen.html" class="logo">Milan<span>o</span></a>
+            <a href="index.html" class="logo">Milan<span>o</span></a>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="about.html">About Milano</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="bookings.html">Reservations</a></li>
-                   
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html" class="active">Menu</a></li>
+                    <li><a href="bookings.html">Booking</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </nav>
             <button class="hamburger" id="hamburger">
@@ -34,11 +535,10 @@
     <div class="mobile-overlay" id="mobileOverlay"></div>
     <div class="mobile-nav" id="mobileNav">
         <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About Milano</a></li>
-            <li><a href="menu.html">Menu</a></li>
-            <li><a href="bookings.html">Reservations</a></li>
-           
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html" class="active">Menu</a></li>
+            <li><a href="bookings.html">Booking</a></li>
+            <li><a href="#contact">Contact Us</a></li>
         </ul>
     </div>
 
@@ -61,26 +561,23 @@
         </div>
     </section>
 
-  <footer id="contact">
+    <!-- Footer -->
+    <footer id="contact">
         <div class="footer-container">
             <!-- Contact Information -->
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Asarum Storgatan 22, Blekinga</span>
+                    <span>Asarum Storgatan, 12345 Stockholm, Sweden</span>
                 </div>
                 
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
                     <span>+46 8 123 4567</span>
                 </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>info@milano-pizza.com</span>
-                </div>
             </div>
             
+            <!-- Opening Hours -->
             <div class="opening-hours">
                 <div class="hours-row">
                     <span>Sunday - Thursday:</span> 12:00 PM - 11:00 PM
@@ -93,16 +590,136 @@
                 </div>
             </div>
             
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2023 Milano Italian Pizza Restaurant. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-
 
     <!-- Admin Access Link -->
     <a href="./public/login.html" class="admin-link">
         <i class="fas fa-lock"></i> Admin Access
     </a>
-  <script src="./js/menu.js"></script>
-    
-     <script src="./js/scripts.js"></script>
+
+    <script>
+        // Mobile menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        mobileOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close menu when clicking on links
+        const navLinks = document.querySelectorAll('.mobile-nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+
+        // Menu loading functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'https://restaurant-backend-1-68of.onrender.com/api/products';
+            const menuContainer = document.getElementById('menuContainer');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+
+            // Function to fetch and display products
+            async function loadMenu(category = 'pizza') {
+                try {
+                    menuContainer.innerHTML = '<div class="loading">Loading menu...</div>';
+                    
+                    const response = await fetch(`${API_URL}?category=${category}`);
+                    if (!response.ok) throw new Error('Error fetching data');
+                    
+                    const products = await response.json();
+                    renderMenu(products, category);
+                } catch (error) {
+                    menuContainer.innerHTML = `<div class="error">${error.message}</div>`;
+                }
+            }
+
+            // Function to render products
+            function renderMenu(products, category) {
+                if (products.length === 0) {
+                    menuContainer.innerHTML = `<div class="empty">No products in this category</div>`;
+                    return;
+                }
+
+                let menuHTML = '';
+                
+                // Pizza section
+                if (category === 'pizza') {
+                    menuHTML = `
+                        <table class="pizza-table">
+                            <thead>
+                                <tr>
+                                    <th>Pizza</th>
+                                    <th>Ingredients</th>
+                                    <th>Price (sek)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${products.map(product => `
+                                    <tr>
+                                        <td>
+                                            <div class="pizza-type">
+                                                <i class="fas fa-pizza-slice pizza-icon"></i>
+                                                ${product.name}
+                                            </div>
+                                        </td>
+                                        <td>${product.description || 'No description'}</td>
+                                        <td>${product.price}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+                // Other sections
+                else {
+                    menuHTML = `
+                        <div class="menu-grid">
+                            ${products.map(product => `
+                                <div class="menu-item">
+                                    <div class="item-header">
+                                        <h3>${product.name}</h3>
+                                        <span class="item-price">${product.price} sek</span>
+                                    </div>
+                                    <p class="item-description">${product.description || 'No description available'}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                menuContainer.innerHTML = menuHTML;
+            }
+
+            // Switch categories
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    loadMenu(btn.dataset.category);
+                });
+            });
+
+            // Load initial menu
+            loadMenu();
+        });
+    </script>
 </body>
 </html>
