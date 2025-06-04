@@ -17,7 +17,7 @@
     --transition: all 0.3s ease;
 }
 body {
-    background-color: #7c6e6e;
+    background-color: #4d4d4d;
     color: var(--text-light);
     overflow-x: hidden;
     line-height: 1.6;
@@ -31,7 +31,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(44, 44, 44, 0.85);
+    background: rgba(125, 116, 116, 0.85);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 15px 0;
