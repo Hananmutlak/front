@@ -1,39 +1,53 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل الدخول</title>
-  <link rel="stylesheet" href="./css/main.css">
+  <title>Login | Restaurant Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
-  <div class="auth-container">
-    <div class="login-card">
-     <div class="logo">
-  <div style="font-size: 3rem; color: #2A2F4F;">🍽️</div>
-  <h1>نظام إدارة المطعم</h1>
-</div>
-      <h2>مرحبًا بك في نظام الإدارة</h2>
-      <form id="loginForm">
-        <div class="input-group">
-          <input type="email" id="email" required>
-          <label>البريد الإلكتروني</label>
+  <!-- Hero Section with Video Background -->
+  <section class="hero">
+    <video autoplay muted loop class="hero-video">
+      <source src="../images/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    
+    <div class="login-container">
+      <div class="login-card">
+        <div class="logo">
+          <a href="../index.html" class="logo">Milan<span>o</span></a>
+          <h1>Restaurant Management System</h1>
+       
         </div>
         
-        <div class="input-group">
-          <input type="password" id="password" required>
-          <label>كلمة المرور</label>
-        </div>
+       
+        
+        <form id="loginForm">
+          <div class="input-group">
+            <input type="email" id="email" required placeholder=" ">
+            <label>Email</label>
+          </div>
+          
+          <div class="input-group">
+            <input type="password" id="password" required placeholder=" ">
+            <label>Password</label>
+          </div>
 
-        <button type="submit" class="glow-btn">
-          <span>دخول</span>
-          <div class="glow"></div>
-        </button>
-      </form>
-      <p id="loginError" class="error-message"></p>
+          <button type="submit" class="glow-btn">
+            <span>Login</span>
+          </button>
+        </form>
+        
+        <p id="loginError" class="error-message"></p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <script src="./js/auth.js"></script>
+
+ <script src="./js/auth.js"></script>
 </body>
 </html>

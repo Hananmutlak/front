@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Management</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
+  <style>:root {
       --primary: #2A2F4F;
       --secondary: #917FB3;
       --light: #FDE2F3;
@@ -339,19 +338,20 @@
       font-size: 3rem;
       color: #ddd;
       margin-bottom: 1rem;
-    }
-  </style>
+    }</style>>
+  
+
 </head>
 <body>
-  <nav class="main-nav">
+   <nav class="main-nav">
     <ul>
       <li><a href="products.html"><i class="fas fa-utensils"></i> Products</a></li>
       <li><a href="bookings.html" class="active"><i class="fas fa-calendar-check"></i> Bookings</a></li>
-       <li><a href="dashboard.html" class="active"><i class="fas fa-calendar-check"></i> dashboard</a></li>
-      
+      <li><a href="dashboard.html" class="active"><i class="fas fa-calendar-check"></i>Dashboard</a></li>
       <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </nav>
+
 
   <div class="container">
     <div class="page-header">
@@ -416,8 +416,8 @@
     </div>
   </div>
 
-  <script>
-    // Check for valid token
+  
+    <script>// Check for valid token
     document.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -685,39 +685,6 @@
       window.location.href = 'login.html';
     };
     
-    // Sample data for initial display
-    window.onload = function() {
-      setTimeout(() => {
-        const products = [
-          {
-            _id: "1",
-            name: "Margherita Pizza",
-            description: "Classic pizza with tomato sauce and mozzarella",
-            price: 99,
-            category: "pizza",
-            isAvailable: true
-          },
-          {
-            _id: "2",
-            name: "Garlic Bread",
-            description: "Freshly baked bread with garlic butter",
-            price: 45,
-            category: "appetizer",
-            isAvailable: true
-          },
-          {
-            _id: "3",
-            name: "Tiramisu",
-            description: "Classic Italian dessert with coffee flavor",
-            price: 65,
-            category: "dessert",
-            isAvailable: true
-          }
-        ];
-        
-        renderProducts(products);
-      }, 1000);
-    };
-  </script>
+   </script>
 </body>
 </html>

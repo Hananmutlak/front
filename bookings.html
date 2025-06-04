@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table Reservation - Milano Restaurant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./css/styles.css">
+ <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <!-- Header -->
-         <header>
+  
+    <header>
         <div class="header-container">
-            <a href="index.html" class="logo">Milan<span>o</span></a>
+            <a href="indexen.html" class="logo">Milan<span>o</span></a>
             <nav>
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="about.html">About Milano</a></li>
                     <li><a href="menu.html">Menu</a></li>
                     <li><a href="bookings.html">Reservations</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
+                   
                 </ul>
             </nav>
             <button class="hamburger" id="hamburger">
@@ -29,7 +30,17 @@
         </div>
     </header>
 
-
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About Milano</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="bookings.html">Reservations</a></li>
+           
+        </ul>
+    </div>
 
     <!-- Booking Section -->
     <section id="booking" class="booking-section">
@@ -84,54 +95,48 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
+ <footer id="contact">
         <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Information</h3>
-                <ul class="contact-info">
-                    <li><i class="fas fa-map-marker-alt"></i> Tahlia Street, Riyadh, Saudi Arabia</li>
-                    <li><i class="fas fa-phone"></i> +966 11 123 4567</li>
-                    <li><i class="fas fa-envelope"></i> info@milano-pizza.com</li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Opening Hours</h3>
-                <div class="opening-hours">
-                    <p><span>Sunday - Thursday:</span> 12:00 PM - 11:00 PM</p>
-                    <p><span>Friday & Saturday:</span> 1:00 PM - 12:00 AM</p>
-                    <p><span>Friday Prayer:</span> Closed until 4:00 PM</p>
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Asarum Storgatan 22, Blekinga</span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+46 8 123 4567</span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@milano-pizza.com</span>
                 </div>
             </div>
             
-            <div class="footer-section">
-                <h3>Settings</h3>
-                <div class="settings-options">
-                    <button class="setting-btn">
-                        <i class="fas fa-book-reader"></i> Read Page
-                    </button>
-                    <button class="setting-btn">
-                        <i class="fas fa-language"></i> العربية
-                    </button>
-                    <button class="setting-btn" id="nightModeBtn">
-                        <i class="fas fa-moon"></i> Night Mode
-                    </button>
+            <div class="opening-hours">
+                <div class="hours-row">
+                    <span>Sunday - Thursday:</span> 12:00 PM - 11:00 PM
+                </div>
+                <div class="hours-row">
+                    <span>Friday & Saturday:</span> 1:00 PM - 12:00 AM
+                </div>
+                <div class="hours-row">
+                    <span>Friday Prayer:</span> Closed until 4:00 PM
                 </div>
             </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2023 Milano Italian Pizza Restaurant. All rights reserved.</p>
+            
         </div>
     </footer>
+
 
     <!-- Admin Access Link -->
     <a href="./public/login.html" class="admin-link">
         <i class="fas fa-lock"></i> Admin Access
     </a>
 
-    <script src="./js/scripts.js"></script>
+   
     <script src="./js/booking.js"></script>
 </body>
 </html>
