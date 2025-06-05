@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Discover the best authentic Italian pizzas made
+       with fresh ingredients and traditional recipes.
+       Order now for a delicious experience.">
     <title>About Milano - Authentic Italian Pizza</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
        <link rel="stylesheet" href="./css/styles.css">
@@ -11,7 +14,7 @@
  
     <header>
         <div class="header-container">
-            <a href="indexen.html" class="logo">Milan<span>o</span></a>
+            <a href="index.html" class="logo">Milan<span>o</span></a>
             <nav>
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
@@ -21,11 +24,12 @@
                    
                 </ul>
             </nav>
-            <button class="hamburger" id="hamburger">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
+       <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu">
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+</button>
+
         </div>
     </header>
 
@@ -43,10 +47,10 @@
 
 
 
-    <!-- About Content Section -->
-    <section class="about-section">
-        <div class="about-container">
-            <div class="about-text">
+  <section class="about-section">
+  <div class="about-container">
+    <h2>About Milano</h2>
+    <div class="about-text">
                 <p>Milano Restaurant was founded in 2010 with one mission: to serve authentic Italian pizza with unparalleled quality and taste. Inspired by Neapolitan traditions, we are committed to using the best ingredients and traditional preparation methods.</p>
                 
                 <p>Our pizzas are passionately crafted by our expert chefs who bring decades of experience from Italy. We import our flour, tomatoes, and cheese directly from Italy to ensure the most authentic flavors.</p>
@@ -58,12 +62,15 @@
                 <p>We take pride in being the go-to destination for pizza lovers in the area. Our team is dedicated to providing an exceptional dining experience to every guest, with premium quality, friendly service, and a warm atmosphere.</p>
             </div>
             
-            <div class="about-image">
-                <img src="./images/backgrund.jpeg">
-            </div>
-        </div>
-    </section>
-
+              <div class="about-image">
+      <picture>
+        <source srcset="./images/backgrund.avif" type="image/avif">
+        <source srcset="./images/backgrund.jpeg" type="image/jpeg">
+        <img src="./images/backgrund.jpeg" alt="Interior of Milano Restaurant">
+      </picture>
+    </div>
+  </div>
+</section>
 
     <!-- Footer -->
     <footer id="contact">

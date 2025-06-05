@@ -1,0 +1,822 @@
+/* SCSS Variables */
+$primary: #ff3e47;
+$secondary: #ffb84d;
+$dark: #2c2c2c;
+$light: #f8f9fa;
+$text: #333;
+$text-light: #f8f9fa;
+$overlay: rgba(0, 0, 0, 0.7);
+$transition: all 0.3s ease;
+$glow: 0 0 15px rgba(255, 255, 255, 0.7);
+$light-glow: 0 0 10px rgba(255, 255, 255, 0.4);
+$accent-glow: 0 0 20px rgba(255, 62, 71, 0.7);
+
+/* Mixins */
+@mixin glow-effect($color) {
+  box-shadow: 0 0 15px $color;
+}
+
+@mixin text-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+@mixin hover-glow {
+  &:hover {
+    box-shadow: $glow;
+  }
+}
+
+/* Base Styles */
+body {
+  background-color: #4d4d4d;
+  color: $text-light;
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(125, 116, 116, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 15px 0;
+  transition: $transition;
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: $primary;
+    text-decoration: none;
+    @include text-glow;
+    
+    span {
+      color: $secondary;
+    }
+  }
+
+  nav {
+    ul {
+      display: flex;
+      list-style: none;
+      
+      li {
+        margin-right: 25px;
+      }
+      
+      a {
+        text-decoration: none;
+        color: $text-light;
+        font-weight: 600;
+        padding: 8px 15px;
+        border-radius: 4px;
+        transition: $transition;
+        
+        &:hover, &.active {
+          background: rgba(193, 39, 45, 0.3);
+          @include glow-effect(rgba(255, 62, 71, 0.5));
+        }
+      }
+    }
+  }
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-grow: 1;
+  
+  .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+  }
+  
+  .hero-content {
+    text-align: center;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+    
+    .hero-title {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+      animation: fadeInDown 1s ease;
+      @include text-glow;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+      animation: fadeInUp 1s ease 0.3s forwards;
+      opacity: 0;
+      @include text-glow;
+    }
+  }
+}
+
+/* Menu Section */
+#menu {
+  padding: 150px 20px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: $secondary;
+    @include text-glow;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #ccc;
+    @include text-glow;
+  }
+  
+  .menu-categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0 50px;
+    flex-wrap: wrap;
+    
+    .category-btn {
+      background: transparent;
+      border: 2px solid $secondary;
+      color: $secondary;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: $transition;
+      font-size: 1.1rem;
+      @include glow-effect(rgba(255, 184, 77, 0.3));
+      
+      &.active, &:hover {
+        background: $secondary;
+        color: $dark;
+        @include glow-effect(rgba(255, 184, 77, 0.7));
+      }
+    }
+  }
+  
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    
+    .menu-item {
+      background: rgba(44, 44, 44, 0.85);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      @include glow-effect(rgba(255, 255, 255, 0.1));
+      
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4), $glow;
+        border-color: rgba(244, 162, 97, 0.3);
+      }
+      
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        
+        h3 {
+          font-size: 1.4rem;
+          color: $secondary;
+          @include text-glow;
+        }
+        
+        .item-price {
+          font-weight: bold;
+          color: $secondary;
+          font-size: 1.3em;
+          @include text-glow;
+        }
+      }
+      
+      .item-description {
+        color: #ccc;
+        line-height: 1.7;
+      }
+    }
+  }
+}
+
+/* Booking Section */
+.booking-section {
+  padding: 120px 20px 80px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(17, 17, 17, 0.9), rgba(44, 44, 44, 0.8)),
+              url('../images/Flagstaff+Woodfired+Pizza.jpg') no-repeat center center/cover;
+  
+  .booking-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    background: rgba(44, 44, 44, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), $light-glow;
+    border: 1px solid rgba(244, 162, 97, 0.2);
+    animation: fadeIn 0.8s ease-out;
+    
+    .booking-form-header {
+      text-align: center;
+      margin-bottom: 40px;
+      
+      h2 {
+        font-size: 2.5rem;
+        color: $secondary;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        @include text-glow;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 500px;
+        margin: 0 auto;
+        @include text-glow;
+      }
+    }
+    
+    #bookingForm {
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+      
+      .form-group {
+        flex: 1 0 50%;
+        padding: 0 15px;
+        margin-bottom: 25px;
+        
+        label {
+          display: block;
+          margin-bottom: 8px;
+          color: $secondary;
+          font-weight: 600;
+          font-size: 1.1rem;
+          
+          i {
+            margin-right: 10px;
+            color: $primary;
+            text-shadow: $light-glow;
+          }
+        }
+        
+        .form-control {
+          width: 100%;
+          padding: 15px;
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+          background: rgba(0, 0, 0, 0.3);
+          color: white;
+          font-size: 1rem;
+          transition: $transition;
+          box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.2);
+          
+          &:focus {
+            border-color: $primary;
+            outline: none;
+            box-shadow: 0 0 10px rgba(193, 39, 45, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+    }
+  }
+}
+
+/* About Section */
+.about-section {
+  padding: 80px 0;
+  background: #1a1a1a;
+  
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+    
+    h2 {
+      @include text-glow;
+    }
+    
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px;
+      background: rgba(44, 44, 44, 0.7);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), $light-glow;
+      animation: fadeInUp 0.8s ease;
+      
+      p {
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+    }
+    
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      animation: fadeIn 1s ease;
+      
+      img {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), $glow;
+        transition: $transition;
+        
+        &:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+  }
+}
+
+/* Buttons */
+.reservation-btn, .submit-btn {
+  display: inline-block;
+  padding: 16px 40px;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), $accent-glow;
+  position: relative;
+  overflow: hidden;
+  animation: pulse 2s infinite;
+  
+  &:hover {
+    background: #9c1d22;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 62, 71, 1);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(25deg);
+    transition: all 0.6s;
+  }
+  
+  &:hover::after {
+    left: 120%;
+  }
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  padding: 20px 0;
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+    
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 15px;
+      
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        
+        i {
+          color: $secondary;
+          font-size: 1.2rem;
+          text-shadow: $light-glow;
+        }
+        
+        span {
+          @include text-glow;
+        }
+      }
+    }
+    
+    .opening-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 15px;
+      font-size: 1rem;
+      
+      .hours-row {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        
+        span {
+          font-weight: bold;
+          color: $secondary;
+          @include text-glow;
+        }
+      }
+    }
+  }
+}
+
+/* Admin Link */
+.admin-link {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: $primary;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), $accent-glow;
+  transition: $transition;
+  
+  i {
+    margin-right: 8px;
+  }
+  
+  &:hover {
+    background: #9c1d22;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 62, 71, 1);
+  }
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  position: relative;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  .hamburger-line {
+    width: 100%;
+    height: 4px;
+    background: $secondary;
+    border-radius: 10px;
+    transition: $transition;
+    transform-origin: center;
+    box-shadow: $light-glow;
+  }
+  
+  &.active {
+    .hamburger-line {
+      &:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+        background: $primary;
+        width: 70%;
+        margin-left: 30%;
+        box-shadow: $accent-glow;
+      }
+      
+      &:nth-child(2) {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      
+      &:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+        background: $primary;
+        width: 70%;
+        margin-left: 30%;
+        box-shadow: $accent-glow;
+      }
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border-radius: 0 0 0 40px;
+      border: 4px solid $secondary;
+      border-top: none;
+      border-right: none;
+      box-sizing: border-box;
+      transform: rotate(45deg);
+      z-index: -1;
+      box-shadow: $light-glow;
+    }
+  }
+}
+
+/* Mobile Navigation */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 800;
+  opacity: 0;
+  visibility: hidden;
+  transition: $transition;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  background: rgba(44, 44, 44, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 20px 20px;
+  transition: right 0.4s ease-in-out;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+  
+  &.active {
+    right: 0;
+    box-shadow: -5px 0 25px rgba(255, 255, 255, 0.2);
+  }
+  
+  ul {
+    list-style: none;
+    
+    li {
+      margin-bottom: 20px;
+    }
+    
+    a {
+      display: block;
+      color: $text-light;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 12px;
+      border-radius: 5px;
+      transition: $transition;
+      @include text-glow;
+      
+      &:hover, &.active {
+        background: rgba(193, 39, 45, 0.3);
+        box-shadow: $accent-glow;
+      }
+    }
+  }
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(193, 39, 45, 0.7), $accent-glow;
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(193, 39, 45, 0), $accent-glow;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(193, 39, 45, 0), $accent-glow;
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .hero-title, .about-hero-title {
+    font-size: 3rem;
+  }
+  .section-title {
+    font-size: 2.2rem;
+  }
+  .booking-container {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 10px 0;
+    
+    nav ul {
+      display: none;
+    }
+    
+    .hamburger {
+      display: flex;
+    }
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle, .about-hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .reservation-btn, .submit-btn {
+    padding: 14px 30px;
+    font-size: 1.1rem;
+  }
+  
+  #menu {
+    padding-top: 120px;
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .section-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .category-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+  
+  .booking-form-header h2 {
+    font-size: 2rem;
+  }
+  
+  #bookingForm .form-group {
+    flex: 1 0 100%;
+  }
+  
+  .contact-info {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    flex-direction: row;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+  
+  .hero-title, .about-hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle, .about-hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .booking-section {
+    padding: 100px 15px 60px;
+  }
+  
+  .booking-container {
+    padding: 30px;
+  }
+}
